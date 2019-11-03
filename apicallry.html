@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>apicallry</title>
+</head>
+<style>
+  
+  * {
+    box-sizing: border-box;
+}
+
+.con {
+    display: block;
+    width: 100%;
+    margin: 60px auto;
+    padding: 25px 15%;
+    background-color: gray;
+    height: 100%;
+    float: left;
+    
+}
+.text-block {
+    background-color: rgb(90, 88, 88);
+    color: white;
+    height: 50px;
+    text-align: center;
+  }
+
+
+.img2,
+.img1 {
+    opacity: 0.7;
+    max-width: 23%;
+    height: auto;
+    margin-top: 10px;
+    border: 5px solid white;
+}
+
+.row1,
+.row2 {
+    
+    padding-left: 45px;
+    display: block;
+    margin: auto;
+}
+
+.img3 {
+    display: block;
+    /* margin: 40px auto; */
+    height: 500px;
+    width: 300px;
+}
+
+.added {
+    z-index: 1;
+    position: absolute;
+    top: 10%;
+    
+}
+.imgDiv{
+height: 550px;
+width: 303px;
+display: block;
+    margin: 40px auto;
+    border: 1px solid white;
+    position: relative;
+}
+
+img:hover {
+    opacity: 1;
+    margin-bottom: 0px;
+    margin-right: 0pxpx;
+    margin-top: 0px;
+}
+
+.row1::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.con::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.show::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.newAdd {
+    margin: -65px auto 65px auto;
+    padding-top: 65px;
+    width: 100%;
+    background-color: rgba(128, 128, 128, 0.712);
+    height: 150%;
+    
+}
+
+.close {
+    z-index: 3;
+    position: absolute;
+    right: 25%;
+    top: 10%;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+}
+
+.first {
+    z-index: 1;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+
+.second {
+    z-index: 1;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 50%;
+    height: 100%;
+    float: left;
+
+}
+
+.show {
+    visibility: hidden;
+    
+}
+
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 60%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+.next {
+    left: 50%;
+}
+.prev {
+    right: 50%;
+}
+
+</style>
+
+<body>
+        <img id="img" src="">
+
+    <center>
+  
+    <div class="con">
+        <div class="row1" id="add1">
+
+        </div>
+    </div>
+    <button type="button" onclick="data1()"> More </button>
+    <div class="show" id="aa">
+        <div class="newAdd added " id="add">
+        </div>
+        <a href="#" id="close" class="close">&times;</a>
+        <div id="first" class="first">
+    </div>
+</center>
+   
+
+   <script>
+let img=document.getElementById("img");
+let big=document.getElementById("aa");
+document.getElementById('aa').addEventListener('click', addData);
+let arr = [];
+let num = 1;
+let page_num=1;
+let id=0;
+let pages;
+function data() {
+    fetch('http://localhost:1000/'+page_num+"/", {
+            method: 'GET'
+        })
+        .then(re =>re.json()).then(result => {
+        console.log(result);
+        pages=result.length;
+        page_num++;
+        for(let i=0;i<pages;i++){
+        addData(result[i]);
+        }
+
+
+
+        });
+}
+
+    data();
+function data1(){
+data();
+}
+// function data1() {
+//     const myheaders = new Headers();
+//     myheaders.append('Authorization', 'Bearer  OJWUBbC5DAEakfX4gNnSbTgyRWzp4LY556D9');
+//     fetch('https://gorest.co.in/public-api/posts?_format' + num, {
+//             method: 'GET',
+//             headers: myheaders,
+//         })
+//         .then(Response =>
+//             Response.json())
+//         .then(result => {
+//             arr = result.result,
+//                 addData()
+//         });
+
+//     const html = arr.map((item, index) => {
+//         return '<img class="img1" src="' + item.thumbnail + '" data-id="' + index + '" onClick="togglePhoto(event)">';
+//     });
+//     document.getElementById('add1').innerHTML += html.join('');
+
+//     num++;
+// }
+
+// console.log(num);
+
+function addData(src) {
+    big.innerHTML=`<img class="img1" src="${src}" data-id=""  onClick="togglePhoto(event)">`;
+    // document.getElementById('add1').innerHTML += html.join('');
+}
+
+// function togglePhoto(event) {
+//     console.log(num);
+//     console.log(arr);
+//     document.getElementById("aa").style.visibility = "visible"
+//     const index = event.target.getAttribute('data-id');
+//     console.log(index)
+//     document.getElementById("add").innerHTML = '<div class= "imgDiv"><img   src="' + arr[index].url + '" class="img3"><div class="text-block">' + arr[index].title + ' </div></div>';
+// }
+// document.getElementById("close").addEventListener('click', close);
+
+// function close() {
+//     document.getElementById("aa").style.visibility = "hidden";
+// }
+   </script>
+</body>
+
+</html>
